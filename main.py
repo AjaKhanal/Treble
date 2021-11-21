@@ -1,7 +1,14 @@
 import discord
+from discord.ext import commands
+from datetime import datetime
 from constants import TOKEN
+import music
 
-client = discord.Client()
+client = commands.Bot(command_prefix='-', intents=discord.Intents.all())
+cogs = [music]
+
+for i in range(len(cogs)):
+    cogs[i].setup(client)
 
 
 @client.event
@@ -9,13 +16,14 @@ async def on_ready():
     print('We have logged in as {0.user} '.format(client))
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@client.command()
+async def ping(message):
+    await message.send(f'{round(client.latency * 1000)} ms')
+    log_command(message, 'ping')
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+
+def log_command(message, command):
+    print(f'[{datetime.now()}]: Command: {command}, User: {message.author.name}')
 
 
 client.run(TOKEN)

@@ -21,7 +21,7 @@ class music(commands.Cog):
         await ctx.send(msg)
         print(msg)
 
-    @commands.command(aliases=['dc'])
+    @commands.command(aliases=['dc', 'leave'])
     async def disconnect(self, ctx):
         await ctx.voice_client.disconnect()
 
@@ -48,6 +48,10 @@ class music(commands.Cog):
     async def resume(self, ctx):
         await ctx.voice_client.resume()
         await ctx.send("Resuming")
+
+    @commands.command()
+    async def stop(self, ctx):
+        await ctx.voice_client.stop()
 
 
 def setup(client):

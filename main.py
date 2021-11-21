@@ -19,11 +19,7 @@ async def on_ready():
 @client.command()
 async def ping(message):
     await message.send(f'{round(client.latency * 1000)} ms')
-    log_command(message, 'ping')
-
-
-def log_command(message, command):
-    print(f'[{datetime.now()}]: Command: {command}, User: {message.author.name}')
+    music.log_command(message, 'ping')
 
 
 client.run(TOKEN)
